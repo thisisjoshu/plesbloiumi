@@ -2,7 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { Caption, H2 } from "@/components/ui/Typography";
 import { IconArrow } from "@/components/ui/Icon";
 import { ListingCard } from "@/components/site/ListingCard";
-import { STAYS, stayHref } from "@/lib/stays";
+import { STAYS, stayHref, stayImageUrl } from "@/lib/stays";
 
 /**
  * FeaturedStays — 4-up grid (or 2-up at md, single column on mobile).
@@ -22,10 +22,10 @@ export function FeaturedStays() {
             <H2 className="mt-2">Places the locals stand by</H2>
           </div>
           <a
-            href="#"
+            href="/stays"
             className="hidden sm:inline-flex items-center gap-1.5 text-[14px] font-semibold text-lagoon-700 hover:text-lagoon-900 no-underline whitespace-nowrap"
           >
-            Browse all 92 stays <IconArrow size={15} />
+            Browse all {STAYS.length} stays <IconArrow size={15} />
           </a>
         </div>
 
@@ -40,6 +40,7 @@ export function FeaturedStays() {
                 price: stay.price,
                 rating: stay.rating,
                 palette: stay.palette,
+                imageUrl: stayImageUrl(stay, 900),
                 badge: stay.badge,
                 kicker: stay.kicker,
               }}

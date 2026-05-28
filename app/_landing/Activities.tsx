@@ -4,78 +4,55 @@ import { useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { Caption, H2, BodySm } from "@/components/ui/Typography";
 import { Chip } from "@/components/ui/Chip";
-import { ActivityCard, type Activity } from "@/components/site/ActivityCard";
+import { IconArrow } from "@/components/ui/Icon";
+import { ActivityCard } from "@/components/site/ActivityCard";
+import {
+  ACTIVITIES,
+  ACTIVITY_CATEGORIES,
+  activityImageUrl,
+  type ActivityCategory,
+} from "@/lib/activities";
 
-const ACTIVITIES: (Activity & { category: string })[] = [
-  {
-    id: "marovo-dive",
-    category: "Diving",
-    kicker: "Diving · 3 days",
-    name: "Three days on Marovo's drop-offs",
-    meta: "Run by Dive Munda · pickup at your lodge",
-    price: 2400,
-    palette: "marovo",
-    priceSuffix: "/ person",
-  },
-  {
-    id: "skull-island",
-    category: "Kastom",
-    kicker: "Kastom · half day",
-    name: "Skull Island and the war canoes",
-    meta: "Roviana Lagoon · with a chief's descendant",
-    price: 380,
-    palette: "village",
-    priceSuffix: "/ person",
-  },
-  {
-    id: "wwii",
-    category: "WWII",
-    kicker: "WWII history · full day",
-    name: "Guadalcanal: a long walk through the campaign",
-    meta: "From Honiara · lunch included · vintage Jeep",
-    price: 640,
-    palette: "archive",
-    priceSuffix: "/ person",
-  },
-  {
-    id: "surf",
-    category: "Surf",
-    kicker: "Surf · 6 days",
-    name: "Surf the Three Sisters",
-    meta: "Western Province · sleeps 4 · all transfers",
-    price: 5400,
-    palette: "sunset",
-    priceSuffix: "/ trip",
-  },
-];
-
-const CATEGORIES = ["All", "Diving", "Surf", "Kastom", "WWII", "Bushwalk"] as const;
-type Category = (typeof CATEGORIES)[number];
+type FilterValue = ActivityCategory | "All";
 
 /**
  * Activities — chip filter row above a 2-up ActivityCard grid. Category
- * filter is client-side so the user can flip between Diving/Surf/etc. without
- * a navigation. "All" resets the filter.
+ * filter is client-side so the user can flip between Diving/Surf/etc.
+ * without a navigation. "All" resets the filter.
+ *
+ * The landing version caps to four cards to keep scroll length sane — see
+ * /activities for the full grid.
  */
 export function Activities() {
-  const [active, setActive] = useState<Category>("All");
-  const visible =
+  const [active, setActive] = useState<FilterValue>("All");
+  const visible = (
     active === "All"
       ? ACTIVITIES
-      : ACTIVITIES.filter((a) => a.category === active);
+      : ACTIVITIES.filter((a) => a.category === active)
+  ).slice(0, 4);
 
   return (
     <section className="mt-24 md:mt-28">
       <Container>
-        <Caption>Activities</Caption>
-        <H2 className="mt-2">Things people actually do here</H2>
-        <BodySm className="mt-2 max-w-[60ch]">
-          Run by the families and operators who live in the place. No air-con
-          coaches, no postcard checklists.
-        </BodySm>
+        <div className="flex items-end justify-between gap-6">
+          <div>
+            <Caption>Activities</Caption>
+            <H2 className="mt-2">Things people actually do here</H2>
+            <BodySm className="mt-2 max-w-[60ch]">
+              Run by the families and operators who live in the place. No
+              air-con coaches, no postcard checklists.
+            </BodySm>
+          </div>
+          <a
+            href="/activities"
+            className="hidden sm:inline-flex items-center gap-1.5 text-[14px] font-semibold text-lagoon-700 hover:text-lagoon-900 no-underline whitespace-nowrap"
+          >
+            All {ACTIVITIES.length} activities <IconArrow size={15} />
+          </a>
+        </div>
 
         <div className="mt-7 flex flex-wrap gap-2">
-          {CATEGORIES.map((cat) => {
+          {ACTIVITY_CATEGORIES.map((cat) => {
             const on = active === cat;
             return (
               <button
@@ -98,7 +75,19 @@ export function Activities() {
 
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-5">
           {visible.map((a) => (
-            <ActivityCard key={a.id} activity={a} />
+            <ActivityCard
+              key={a.id}
+              activity={{
+                id: a.id,
+                name: a.name,
+                kicker: a.kicker,
+                meta: a.meta,
+                price: a.price,
+                palette: a.palette,
+                imageUrl: activityImageUrl(a, 900),
+                priceSuffix: a.priceSuffix,
+              }}
+            />
           ))}
         </div>
       </Container>

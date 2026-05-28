@@ -12,7 +12,10 @@ export type Listing = {
   price: number;
   /** 0.0–5.0; rendered against the sun motif (never a star glyph). */
   rating: number;
+  /** Coloured fallback if the imageUrl 404s or hasn't loaded yet. */
   palette: PhotoPalette;
+  /** Direct image URL (CDN). When absent we fall back to the palette tile. */
+  imageUrl?: string;
   /** Hibiscus pill — "New host", "Sale", "Local-run". */
   badge?: string;
   /** Postcard hand-caption overlaid on the photo. */
@@ -59,6 +62,8 @@ export function ListingCard({
     <>
       <Photo
         palette={listing.palette}
+        src={listing.imageUrl}
+        alt={listing.name}
         ratio={ratio}
         radius="none"
         badge={listing.badge}

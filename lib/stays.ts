@@ -1,9 +1,10 @@
 import type { PhotoPalette } from "@/components/ui/Photo";
+import { IMG, SI, unsplashUrl } from "@/lib/images";
 
 /**
- * Stays catalogue — single source of truth for the landing grid and the
- * /stays/[id] detail pages. Add new stays here and they automatically
- * appear on the landing page and get a generated detail route.
+ * Stays catalogue — single source of truth for the landing grid, the
+ * /stays index, and the /stays/[id] detail pages. Add new stays here and
+ * they automatically appear everywhere a Stays loop is rendered.
  */
 
 export type AmenityIcon =
@@ -18,6 +19,9 @@ export type Room = {
   name: string;
   meta: string;
   price: number;
+  /** Photo ID — fed through unsplashUrl() at render time. */
+  imageId: string;
+  /** Palette fallback if the image fails to load. */
   palette: PhotoPalette;
 };
 
@@ -30,21 +34,17 @@ export type Review = {
 
 export type Stay = {
   id: string;
-  /** Listing display name */
   name: string;
-  /** Short tagline for the card meta line */
   meta: string;
-  /** Long location string for the detail subline */
   location: string;
-  /** Short area name for the breadcrumb */
   area: string;
-  /** Capacity blurb on the detail page subline */
   capacity: string;
-  /** Per-night base rate in SBD */
   price: number;
-  /** 0.0–5.0 */
   rating: number;
   reviewCount: number;
+  /** Primary card / hero image. */
+  imageId: string;
+  /** Coloured fallback if the image 404s. */
   palette: PhotoPalette;
   badge?: string;
   kicker?: string;
@@ -55,10 +55,11 @@ export type Stay = {
   amenities: { label: string; icon: AmenityIcon }[];
   rooms: Room[];
   reviews: Review[];
-  /** Palettes used for the gallery thumbnails (hero + 4 more). */
-  galleryPalettes: PhotoPalette[];
-  /** Optional return boat transfer fee shown in the booking breakdown. */
+  /** Five photo IDs — first is the gallery hero, next four are thumbs. */
+  galleryImageIds: string[];
   boatTransfer?: number;
+  /** Tags used by the index page's filter chips. */
+  tags: string[];
 };
 
 export const STAYS: Stay[] = [
@@ -72,6 +73,7 @@ export const STAYS: Stay[] = [
     price: 1840,
     rating: 4.9,
     reviewCount: 47,
+    imageId: SI.beachHut,
     palette: "marovo",
     badge: "Diving",
     hostName: "The Kelly family",
@@ -94,18 +96,21 @@ export const STAYS: Stay[] = [
         name: "Garden bungalow",
         meta: "1 queen · ensuite · no AC · ceiling fan",
         price: 1840,
+        imageId: SI.beachHut,
         palette: "jungle",
       },
       {
         name: "Lagoon-edge bungalow",
         meta: "1 queen + 1 single · over-water deck · best for sunsets",
         price: 2380,
+        imageId: IMG.overwaterOcean,
         palette: "marovo",
       },
       {
         name: "Family hut",
         meta: "2 queens · separate kids room · garden",
         price: 3200,
+        imageId: SI.palmBeach,
         palette: "village",
       },
     ],
@@ -129,8 +134,15 @@ export const STAYS: Stay[] = [
         text: "The reef walk before breakfast made the trip. Bring water shoes. The kitchen will pack you a coconut for the way.",
       },
     ],
-    galleryPalettes: ["marovo", "reef", "village", "sunset", "jungle"],
+    galleryImageIds: [
+      SI.beachHut,
+      IMG.divingReef,
+      SI.aerialIsland,
+      IMG.tropicalLagoon,
+      SI.palmBeach,
+    ],
     boatTransfer: 600,
+    tags: ["Marovo", "Diving", "Family-run"],
   },
   {
     id: "zipolo",
@@ -142,6 +154,7 @@ export const STAYS: Stay[] = [
     price: 1200,
     rating: 4.8,
     reviewCount: 38,
+    imageId: SI.boatsOnWater,
     palette: "lagoon",
     hostName: "Aaron",
     hostInitial: "A",
@@ -163,18 +176,21 @@ export const STAYS: Stay[] = [
         name: "Beachfront leaf hut",
         meta: "1 queen · ocean view · open-air bathroom",
         price: 1200,
+        imageId: SI.beachHut,
         palette: "reef",
       },
       {
         name: "Garden hut",
         meta: "1 queen · ceiling fan · 30 sec to the beach",
         price: 950,
+        imageId: SI.palmSeashore,
         palette: "jungle",
       },
       {
         name: "Family hut",
         meta: "1 queen + 2 singles · sleeps 4",
         price: 1850,
+        imageId: SI.boatsOnWater,
         palette: "lagoon",
       },
     ],
@@ -192,8 +208,15 @@ export const STAYS: Stay[] = [
         text: "Not luxurious and that's the whole appeal. Food was unreal — fresh fish every night, papaya for breakfast.",
       },
     ],
-    galleryPalettes: ["lagoon", "reef", "sunset", "village", "marovo"],
+    galleryImageIds: [
+      SI.boatsOnWater,
+      SI.aerialBoats,
+      IMG.shipwreckCoral1,
+      SI.peopleInBoat,
+      SI.seashore,
+    ],
     boatTransfer: 280,
+    tags: ["Munda", "Diving", "Local-run"],
   },
   {
     id: "tetepare",
@@ -205,6 +228,7 @@ export const STAYS: Stay[] = [
     price: 980,
     rating: 4.9,
     reviewCount: 24,
+    imageId: SI.smallIsland,
     palette: "jungle",
     badge: "Conservation",
     hostName: "The Tetepare Descendants' Association",
@@ -226,12 +250,14 @@ export const STAYS: Stay[] = [
         name: "Beach hut",
         meta: "1 double · mosquito net · shared bathroom",
         price: 980,
+        imageId: SI.greenTreesWater,
         palette: "jungle",
       },
       {
         name: "Forest hut",
         meta: "2 singles · raised on stilts · forest view",
         price: 980,
+        imageId: IMG.waterfallForest,
         palette: "jungle",
       },
     ],
@@ -249,8 +275,15 @@ export const STAYS: Stay[] = [
         text: "Bring everything you need: bug spray, head torch, snacks for the boat. You won't get any of it on the island. That's the point.",
       },
     ],
-    galleryPalettes: ["jungle", "reef", "marovo", "storm", "sunset"],
+    galleryImageIds: [
+      SI.smallIsland,
+      SI.waterfall,
+      SI.greenTreesWater,
+      SI.treeBranchBeach,
+      SI.birdOnTree,
+    ],
     boatTransfer: 450,
+    tags: ["Tetepare", "Conservation", "Off-grid"],
   },
   {
     id: "fatboys",
@@ -262,6 +295,7 @@ export const STAYS: Stay[] = [
     price: 1450,
     rating: 4.7,
     reviewCount: 62,
+    imageId: IMG.overwaterOcean,
     palette: "reef",
     kicker: "saltwater",
     hostName: "The Fatboys crew",
@@ -284,12 +318,14 @@ export const STAYS: Stay[] = [
         name: "Over-water bungalow",
         meta: "1 queen · ocean view · private deck",
         price: 1450,
+        imageId: IMG.overwaterOcean,
         palette: "reef",
       },
       {
         name: "Over-water suite",
         meta: "1 king · sitting room · glass floor panel",
         price: 1980,
+        imageId: IMG.overwaterWalkways,
         palette: "lagoon",
       },
     ],
@@ -307,8 +343,15 @@ export const STAYS: Stay[] = [
         text: "Bit busier than the lagoon places — but the food, drinks and easy Gizo access made it worth it. Loved the bar.",
       },
     ],
-    galleryPalettes: ["reef", "lagoon", "sunset", "marovo", "village"],
+    galleryImageIds: [
+      IMG.overwaterOcean,
+      IMG.overwaterWalkways,
+      IMG.houseOnShore,
+      SI.aerialBoats,
+      SI.palmSeashore,
+    ],
     boatTransfer: 180,
+    tags: ["Gizo", "Snorkelling", "Over-water"],
   },
 ];
 
@@ -318,4 +361,9 @@ export function getStay(id: string): Stay | undefined {
 
 export function stayHref(stay: Pick<Stay, "id">): string {
   return `/stays/${stay.id}`;
+}
+
+/** Convenience — turn a stay's primary imageId into a full CDN URL. */
+export function stayImageUrl(stay: Pick<Stay, "imageId">, width = 1200) {
+  return unsplashUrl(stay.imageId, width);
 }

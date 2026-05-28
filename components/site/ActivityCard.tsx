@@ -9,7 +9,10 @@ export type Activity = {
   kicker: string;
   meta: string;
   price: number;
+  /** Coloured fallback if the imageUrl 404s or hasn't loaded yet. */
   palette: PhotoPalette;
+  /** Direct image URL (CDN). When absent we fall back to the palette tile. */
+  imageUrl?: string;
   priceSuffix?: string;
 };
 
@@ -41,6 +44,8 @@ export function ActivityCard({ activity, onClick, className }: ActivityCardProps
     >
       <Photo
         palette={activity.palette}
+        src={activity.imageUrl}
+        alt={activity.name}
         ratio="auto"
         radius="none"
         className="h-full"
