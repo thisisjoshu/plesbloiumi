@@ -11,15 +11,7 @@ import { HostCTA } from "./_landing/HostCTA";
 export default function Home() {
   return (
     <>
-      <Nav
-        current="stays"
-        links={[
-          { key: "stays", label: "Stays" },
-          { key: "activities", label: "Activities" },
-          { key: "stories", label: "Stories" },
-          { key: "plan", label: "Plan a trip" },
-        ]}
-      />
+      <Nav current="stays" />
       <main className="flex-1">
         <Hero />
         <FeaturedStays />

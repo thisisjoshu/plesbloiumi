@@ -1,5 +1,6 @@
 import { Photo } from "@/components/ui/Photo";
 import type { Room } from "@/lib/stays";
+import { unsplashUrl } from "@/lib/images";
 
 export type RoomListProps = {
   rooms: Room[];
@@ -19,7 +20,13 @@ export function RoomList({ rooms }: RoomListProps) {
           key={room.name}
           className="grid grid-cols-[120px_1fr_auto] md:grid-cols-[180px_1fr_auto] gap-4 md:gap-5 items-center p-4 bg-white border border-shell-200 rounded-card"
         >
-          <Photo palette={room.palette} ratio="4/3" radius="input" />
+          <Photo
+            palette={room.palette}
+            src={unsplashUrl(room.imageId, 400)}
+            alt={room.name}
+            ratio="4/3"
+            radius="input"
+          />
           <div className="min-w-0">
             <h3 className="m-0 font-display text-[20px] md:text-[22px] font-normal text-volcano-900 tracking-[-0.01em]">
               {room.name}

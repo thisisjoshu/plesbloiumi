@@ -2,6 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { H2, Body, Hand } from "@/components/ui/Typography";
 import { IconArrow } from "@/components/ui/Icon";
+import { SI, unsplashUrl } from "@/lib/images";
 
 /**
  * Editorial — 5/7 asymmetric photo+text split (per brand guidance that
@@ -14,7 +15,14 @@ export function Editorial() {
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           <div className="lg:col-span-5">
-            <Photo palette="storm" ratio="3/4" radius="hero" kicker="Marovo, June" />
+            <Photo
+              palette="storm"
+              src={unsplashUrl(SI.peopleInBoat, 900)}
+              alt="Locals heading out across the lagoon in a fibreglass banana boat"
+              ratio="3/4"
+              radius="hero"
+              kicker="Marovo, June"
+            />
           </div>
           <div className="lg:col-span-7 lg:pl-6">
             <Hand>One slow week —</Hand>

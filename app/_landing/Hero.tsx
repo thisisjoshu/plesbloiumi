@@ -80,7 +80,7 @@ export function Hero() {
                   className="mt-3 font-hand text-[clamp(24px,3vw,34px)] text-sun-300"
                   style={{ textShadow: "0 1px 14px rgba(0,0,0,.65)" }}
                 >
-                  Yumi welkam yu.
+                  Welkam.
                 </p>
               </div>
 

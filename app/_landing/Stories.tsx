@@ -2,6 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { Caption, H2, Pijin } from "@/components/ui/Typography";
 import { Photo, type PhotoPalette } from "@/components/ui/Photo";
 import { IconArrow } from "@/components/ui/Icon";
+import { IMG, SI, unsplashUrl } from "@/lib/images";
 
 type Story = {
   id: string;
@@ -10,6 +11,7 @@ type Story = {
   title: string;
   excerpt: string;
   palette: PhotoPalette;
+  imageId: string;
   readTime: string;
 };
 
@@ -22,6 +24,7 @@ const STORIES: Story[] = [
     excerpt:
       "The unofficial economy of the Solomons runs on family ties — and on the assumption that you'll be back.",
     palette: "village",
+    imageId: SI.mountainRoad,
     readTime: "6 min",
   },
   {
@@ -32,6 +35,7 @@ const STORIES: Story[] = [
     excerpt:
       "Three families on Malaita carve, grind and string what the rest of the country uses as currency for bride-price.",
     palette: "sunset",
+    imageId: SI.boatsOnWater,
     readTime: "8 min",
   },
   {
@@ -42,6 +46,7 @@ const STORIES: Story[] = [
     excerpt:
       "Seventy years on, the wrecks of Guadalcanal are coral. Sharks live in the radio rooms. You can still read the gauges.",
     palette: "storm",
+    imageId: IMG.shipwreckCoral2,
     readTime: "5 min",
   },
 ];
@@ -77,6 +82,8 @@ export function Stories() {
             >
               <Photo
                 palette={s.palette}
+                src={unsplashUrl(s.imageId, 800)}
+                alt={s.title}
                 ratio="4/3"
                 radius="card"
                 className="transition-transform duration-300 ease-[var(--ease-out)] group-hover:-translate-y-0.5"

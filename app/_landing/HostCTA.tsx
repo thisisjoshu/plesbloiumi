@@ -3,6 +3,7 @@ import { Photo } from "@/components/ui/Photo";
 import { Pijin, H2, Body } from "@/components/ui/Typography";
 import { Button } from "@/components/ui/Button";
 import { Motif } from "@/components/ui/Motif";
+import { SI, unsplashUrl } from "@/lib/images";
 
 /**
  * HostCTA — pitch to locals to list their place. Gets the loudest button
@@ -16,7 +17,14 @@ export function HostCTA() {
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch bg-white border border-shell-200 rounded-hero overflow-hidden">
           <div className="lg:col-span-5 relative min-h-[280px]">
-            <Photo palette="jungle" ratio="auto" radius="none" className="h-full">
+            <Photo
+              palette="jungle"
+              src={unsplashUrl(SI.aerialBoats, 1200)}
+              alt="Aerial view of boats moored just off the village shore"
+              ratio="auto"
+              radius="none"
+              className="h-full"
+            >
               <Motif
                 name="hibiscus"
                 size={120}

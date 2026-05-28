@@ -89,8 +89,9 @@ export default async function StayPage({ params }: PageProps) {
         {/* Gallery */}
         <Container>
           <Gallery
-            palettes={stay.galleryPalettes}
-            totalPhotoCount={stay.galleryPalettes.length * 5}
+            imageIds={stay.galleryImageIds}
+            fallbackPalette={stay.palette}
+            totalPhotoCount={stay.galleryImageIds.length * 5}
           />
         </Container>
 
