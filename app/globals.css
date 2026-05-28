@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   Ples Blo Iumi — design tokens
+   Cream is gone (it read as "AI default paper"). Page surface is now a pale
+   sea-mist (shell-50) — cool, slightly aqua, distinctly coastal.
+   ============================================================================ */
+
+@theme {
+  /* ── Colors ────────────────────────────────────────────────────────────── */
+
+  /* Lagoon — primary deep turquoise (Marovo) */
+  --color-lagoon-900: #063A45;
+  --color-lagoon-800: #0A5260;
+  --color-lagoon-700: #0E6B7A;
+  --color-lagoon-600: #14879A;
+  --color-lagoon-500: #1FA3B4;
+  --color-lagoon-300: #76C9D3;
+  --color-lagoon-100: #D5EEF1;
+
+  /* Reef — bright tint for chips, callouts */
+  --color-reef-500: #2BC8B6;
+  --color-reef-300: #9CE3DD;
+  --color-reef-100: #DEF6F3;
+
+  /* Hibiscus — brand red */
+  --color-hibiscus-700: #B2351F;
+  --color-hibiscus-600: #D8442E;
+  --color-hibiscus-500: #E66049;
+  --color-hibiscus-300: #F3B5A8;
+  --color-hibiscus-100: #FBE2DC;
+
+  /* Sun — warm accent (flag yellow, gold) */
+  --color-sun-600: #D89A2A;
+  --color-sun-500: #F2B544;
+  --color-sun-300: #F8D58E;
+  --color-sun-100: #FDF1D6;
+
+  /* Shell — pale sea-mist surfaces (cool, faintly aqua) */
+  --color-shell-50:  #E8F0EE;
+  --color-shell-100: #D6E2DE;
+  --color-shell-200: #B9C9C4;
+  --color-shell-400: #7A8E89;
+
+  /* Volcano — ink, neutrals */
+  --color-volcano-900: #161B1F;
+  --color-volcano-800: #232A30;
+  --color-volcano-700: #3B454C;
+  --color-volcano-500: #6B7680;
+  --color-volcano-300: #9DA6AE;
+  --color-volcano-100: #D5DADE;
+  --color-volcano-50:  #ECEEF1;
+
+  /* Forest — niche surface for nature / sustainability */
+  --color-forest-700: #2E5D3E;
+  --color-forest-500: #4E8A5F;
+  --color-forest-100: #DEEDDF;
+
+  /* ── Type families ─────────────────────────────────────────────────────── */
+  --font-display: var(--font-instrument-serif), 'Iowan Old Style', 'Palatino', Georgia, serif;
+  --font-sans:    var(--font-manrope), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-hand:    var(--font-caveat), 'Bradley Hand', cursive;
+
+  /* ── Radii ─────────────────────────────────────────────────────────────── */
+  --radius-chip:  4px;
+  --radius-input: 8px;
+  --radius-card:  12px;
+  --radius-hero:  20px;
+  --radius-pill:  999px;
+
+  /* ── Shadows ───────────────────────────────────────────────────────────── */
+  --shadow-card:  0 1px 2px rgba(22,27,31,.04), 0 8px 24px rgba(22,27,31,.06);
+  --shadow-modal: 0 24px 64px rgba(22,27,31,.18);
+  --shadow-focus: 0 0 0 3px rgba(31,163,180,.30);
+
+  /* ── Motion ────────────────────────────────────────────────────────────── */
+  --ease-out:    cubic-bezier(.2, .7, .2, 1);
+  --ease-in-out: cubic-bezier(.4, 0, .2, 1);
+
+  /* Max content width */
+  --container-content: 1240px;
+}
+
+/* ── Semantic colour roles (not Tailwind utilities — referenced directly) ─ */
+:root {
+  --bg-page:        var(--color-shell-50);
+  --bg-surface:     #FFFFFF;
+  --bg-raised:      var(--color-shell-100);
+  --bg-inverse:     var(--color-volcano-900);
+
+  --fg-1:           var(--color-volcano-900);
+  --fg-2:           var(--color-volcano-700);
+  --fg-3:           var(--color-volcano-500);
+  --fg-inverse:     var(--color-shell-50);
+  --fg-link:        var(--color-lagoon-700);
+  --fg-link-hover:  var(--color-lagoon-900);
+
+  --border-hairline: var(--color-shell-200);
+  --border-strong:   var(--color-volcano-900);
+
+  --accent-primary:  var(--color-lagoon-700);
+  --accent-warm:     var(--color-hibiscus-600);
+  --accent-sun:      var(--color-sun-500);
+
+  --state-success:   var(--color-forest-500);
+  --state-warning:   var(--color-sun-500);
+  --state-danger:    var(--color-hibiscus-600);
+  --state-info:      var(--color-lagoon-500);
+}
+
+/* ============================================================================
+   Base body
+   Sea-mist page, ink text, Manrope body, Instrument Serif for headlines.
+   ============================================================================ */
+html, body {
+  background: var(--bg-page);
+  color: var(--fg-1);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  font-feature-settings: 'ss01', 'ss02';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-lagoon-300);
+  color: var(--color-lagoon-900);
+}
+
+/* Focus ring shared by interactive elements */
+.pbi-focus:focus-visible {
+  outline: 2px solid var(--color-lagoon-500);
+  outline-offset: 3px;
+}

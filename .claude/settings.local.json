@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(mkdir -p /tmp/design)",
+      "Read(//tmp/**)",
+      "Bash(tar -xzf /home/dev_blade_1/.claude/projects/-mnt-c-Users-Dev-Blade-1-Documents-ples-blo-iumi/5b7a9a02-dd85-4b90-9241-54e2ab35edd3/tool-results/webfetch-1780008467416-8k3xtl.bin)",
+      "Bash(mkdir -p \"/mnt/c/Users/Dev Blade 1/Documents/ples-blo-iumi/public/motifs\" \"/mnt/c/Users/Dev Blade 1/Documents/ples-blo-iumi/components/ui\" \"/mnt/c/Users/Dev Blade 1/Documents/ples-blo-iumi/components/site\" \"/mnt/c/Users/Dev Blade 1/Documents/ples-blo-iumi/lib\")",
+      "Bash(cp /tmp/design/ples-blo-iumi-design-system/project/assets/motifs/*.svg \"/mnt/c/Users/Dev Blade 1/Documents/ples-blo-iumi/public/motifs/\")",
+      "Bash(cp /tmp/design/ples-blo-iumi-design-system/project/assets/logo-wordmark.svg /tmp/design/ples-blo-iumi-design-system/project/assets/pattern-shells.svg \"/mnt/c/Users/Dev Blade 1/Documents/ples-blo-iumi/public/\")",
+      "Bash(npx tsc *)",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(npx next *)",
+      "WebSearch",
+      "WebFetch(domain:www.pexels.com)",
+      "Bash(curl -sIL \"https://www.pexels.com/download/video/4010941/\" -o /dev/null -w \"%{url_effective}\\\\n%{http_code}\\\\n\")",
+      "Bash(curl *)",
+      "WebFetch(domain:pixabay.com)",
+      "WebFetch(domain:unsplash.com)"
+    ]
+  }
+}
